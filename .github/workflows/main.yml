@@ -8,12 +8,12 @@ jobs:
     steps:
       # Checkout
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
 
       # Cache
-      - uses: actions/cache@v2
+      - uses: actions/cache@v4
         with:
           path: Library
           key: Library-${{ hashFiles('Assets/**', 'Packages/**', 'ProjectSettings/**') }}
@@ -21,7 +21,7 @@ jobs:
             Library-
       # Build
       - name: Build project
-        uses: game-ci/unity-builder@v3
+        uses: game-ci/unity-builder@v4
         env:
           UNITY_LICENSE: ${{ secrets.UNITY_LICENSE }}
           UNITY_EMAIL: ${{ secrets.UNITY_EMAIL }}
@@ -31,7 +31,7 @@ jobs:
           targetPlatform: StandaloneWindows
 
       # Output
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v4
         with:
           name: Build
           path: build/StandaloneWindows
@@ -42,12 +42,12 @@ jobs:
     steps:
       # Checkout
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
         with:
           lfs: true
       - run: mkdir build
       - run: curl.exe --output build/launcher.zip --url https://linka.su/linkaplay/launcher.zip
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v4
         with:
           name: Build
           path: build/LINKa.plays
@@ -60,7 +60,7 @@ jobs:
           "%programfiles(x86)%\Inno Setup 6\iscc.exe" "installer.iss"
         shell: cmd
       - name: Upload artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: Installer
           path: build/linka.plays.setup.exe
